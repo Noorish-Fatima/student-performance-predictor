@@ -1,0 +1,28 @@
+MODEL PERFORMANCE METRICS
+========================================
+
+Random Forest:
+  MAE:  4.20
+  RMSE: 5.62
+  R²:   0.449
+
+XGBoost:
+  MAE:  4.70
+  RMSE: 6.59
+  R²:   0.244
+
+LightGBM:
+  MAE:  4.25
+  RMSE: 5.61
+  R²:   0.453
+
+Neural Network:
+  MAE:  5.35
+  RMSE: 6.68
+  R²:   0.224
+
+Ensemble:
+  MAE:  4.19
+  RMSE: 5.57
+  R²:   0.459
+

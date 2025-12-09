@@ -1,0 +1,397 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Student Performance Predictor | ML Project</title>
+    <link rel="stylesheet" href="css/style.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"></script>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.8.1/font/bootstrap-icons.css">
+</head>
+<body>
+    <!-- Navigation -->
+    <nav class="navbar navbar-expand-lg navbar-dark bg-primary">
+        <div class="container">
+            <a class="navbar-brand" href="#">
+                <i class="bi bi-graph-up"></i> EduPredict AI
+            </a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav ms-auto">
+                    <li class="nav-item">
+                        <a class="nav-link active" href="index.html">
+                            <i class="bi bi-calculator"></i> Predictor
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="dashboard.html">
+                            <i class="bi bi-speedometer2"></i> Dashboard
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="interventions.html">
+                            <i class="bi bi-lightbulb"></i> Interventions
+                        </a>
+                    </li>
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle" href="#" id="modelsDropdown" role="button" 
+                           data-bs-toggle="dropdown" aria-expanded="false">
+                            <i class="bi bi-cpu"></i> Models
+                        </a>
+                        <ul class="dropdown-menu" aria-labelledby="modelsDropdown">
+                            <li><a class="dropdown-item" href="#" onclick="showModelInfo('random_forest')">Random Forest</a></li>
+                            <li><a class="dropdown-item" href="#" onclick="showModelInfo('xgboost')">XGBoost</a></li>
+                            <li><a class="dropdown-item" href="#" onclick="showModelInfo('neural_network')">Neural Network</a></li>
+                            <li><a class="dropdown-item" href="#" onclick="showModelInfo('ensemble')">Ensemble Model</a></li>
+                        </ul>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Main Content -->
+    <div class="container mt-5">
+        <div class="row justify-content-center">
+            <div class="col-lg-10">
+                <!-- Header Card -->
+                <div class="card shadow mb-4">
+                    <div class="card-body text-center">
+                        <h1 class="display-5 mb-3 gradient-text">
+                            <i class="bi bi-graph-up-arrow"></i> Student Performance Prediction System
+                        </h1>
+                        <p class="lead text-muted">
+                            Advanced Machine Learning system using ensemble models to predict student performance and provide personalized interventions
+                        </p>
+                        <div class="row mt-4">
+                            <div class="col-md-3 col-6">
+                                <div class="stat-badge">
+                                    <h3>89%</h3>
+                                    <small>Accuracy</small>
+                                </div>
+                            </div>
+                            <div class="col-md-3 col-6">
+                                <div class="stat-badge">
+                                    <h3>4.2</h3>
+                                    <small>MAE Score</small>
+                                </div>
+                            </div>
+                            <div class="col-md-3 col-6">
+                                <div class="stat-badge">
+                                    <h3>5+</h3>
+                                    <small>ML Models</small>
+                                </div>
+                            </div>
+                            <div class="col-md-3 col-6">
+                                <div class="stat-badge">
+                                    <h3>AI</h3>
+                                    <small>Interventions</small>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Two Column Layout -->
+                <div class="row">
+                    <!-- Left Column: Prediction Form -->
+                    <div class="col-lg-7">
+                        <div class="card shadow mb-4">
+                            <div class="card-header bg-primary text-white">
+                                <h4 class="mb-0"><i class="bi bi-input-cursor-text"></i> Student Information</h4>
+                            </div>
+                            <div class="card-body">
+                                <form id="predictionForm">
+                                    <!-- Personal Information -->
+                                    <div class="row mb-4">
+                                        <div class="col-md-6">
+                                            <label class="form-label">Full Name</label>
+                                            <input type="text" class="form-control" name="name" placeholder="Enter student name">
+                                        </div>
+                                        <div class="col-md-3">
+                                            <label class="form-label">Gender</label>
+                                            <select class="form-select" name="gender" required>
+                                                <option value="">Select</option>
+                                                <option value="M">Male</option>
+                                                <option value="F">Female</option>
+                                                <option value="other">Other</option>
+                                            </select>
+                                        </div>
+                                        <div class="col-md-3">
+                                            <label class="form-label">Age</label>
+                                            <input type="number" class="form-control" name="age" min="15" max="30" required>
+                                        </div>
+                                    </div>
+
+                                    <!-- Academic Information -->
+                                    <div class="row mb-4">
+                                        <div class="col-md-6">
+                                            <label class="form-label">Nationality</label>
+                                            <select class="form-select" name="nationality" required>
+                                                <option value="">Select Country</option>
+                                                <option value="United States of America">United States</option>
+                                                <option value="China">China</option>
+                                                <option value="India">Pakistan</option>
+                                                <option value="Mexico">Mexico</option>
+                                                <option value="Brazil">Brazil</option>
+                                                <option value="Japan">Japan</option>
+                                                <option value="Canada">Canada</option>
+                                                <option value="Russian Federation">Russia</option>
+                                                <option value="United Kingdom">UK</option>
+                                                <option value="Germany">Germany</option>
+                                            </select>
+                                        </div>
+                                        <div class="col-md-6">
+                                            <label class="form-label">Ethnic Group</label>
+                                            <input type="text" class="form-control" name="ethnic_group" placeholder="Optional">
+                                        </div>
+                                    </div>
+
+                                    <!-- Academic Scores -->
+                                    <div class="row mb-4">
+                                        <div class="col-12">
+                                            <h6 class="border-bottom pb-2 mb-3">
+                                                <i class="bi bi-journal-text"></i> Academic Grades (0-4 GPA Scale)
+                                            </h6>
+                                        </div>
+                                        <div class="col-md-3">
+                                            <label class="form-label">English</label>
+                                            <input type="number" class="form-control" name="english_grade" 
+                                                   min="0" max="4" step="0.1" required>
+                                            <div class="form-text">0.0 - 4.0 scale</div>
+                                        </div>
+                                        <div class="col-md-3">
+                                            <label class="form-label">Mathematics</label>
+                                            <input type="number" class="form-control" name="math_grade" 
+                                                   min="0" max="4" step="0.1" required>
+                                            <div class="form-text">0.0 - 4.0 scale</div>
+                                        </div>
+                                        <div class="col-md-3">
+                                            <label class="form-label">Sciences</label>
+                                            <input type="number" class="form-control" name="sciences_grade" 
+                                                   min="0" max="4" step="0.1" required>
+                                            <div class="form-text">0.0 - 4.0 scale</div>
+                                        </div>
+                                        <div class="col-md-3">
+                                            <label class="form-label">Language</label>
+                                            <input type="number" class="form-control" name="language_grade" 
+                                                   min="0" max="4" step="0.1" required>
+                                            <div class="form-text">0.0 - 4.0 scale</div>
+                                        </div>
+                                    </div>
+
+                                    <!-- Application Components -->
+                                    <div class="row mb-4">
+                                        <div class="col-12">
+                                            <h6 class="border-bottom pb-2 mb-3">
+                                                <i class="bi bi-file-earmark-text"></i> Application Components (1-5 Scale)
+                                            </h6>
+                                        </div>
+                                        <div class="col-md-4">
+                                            <label class="form-label">Portfolio Rating</label>
+                                            <select class="form-select" name="portfolio_rating" required>
+                                                <option value="">Select</option>
+                                                <option value="1">1 - Poor</option>
+                                                <option value="2">2 - Fair</option>
+                                                <option value="3">3 - Good</option>
+                                                <option value="4">4 - Very Good</option>
+                                                <option value="5">5 - Excellent</option>
+                                            </select>
+                                        </div>
+                                        <div class="col-md-4">
+                                            <label class="form-label">Cover Letter</label>
+                                            <select class="form-select" name="coverletter_rating" required>
+                                                <option value="">Select</option>
+                                                <option value="1">1 - Poor</option>
+                                                <option value="2">2 - Fair</option>
+                                                <option value="3">3 - Good</option>
+                                                <option value="4">4 - Very Good</option>
+                                                <option value="5">5 - Excellent</option>
+                                            </select>
+                                        </div>
+                                        <div class="col-md-4">
+                                            <label class="form-label">Reference Letter</label>
+                                            <select class="form-select" name="refletter_rating" required>
+                                                <option value="">Select</option>
+                                                <option value="1">1 - Poor</option>
+                                                <option value="2">2 - Fair</option>
+                                                <option value="3">3 - Good</option>
+                                                <option value="4">4 - Very Good</option>
+                                                <option value="5">5 - Excellent</option>
+                                            </select>
+                                        </div>
+                                    </div>
+
+                                    <!-- Attendance & Extracurricular (Simulated) -->
+                                    <div class="row mb-4">
+                                        <div class="col-md-6">
+                                            <label class="form-label">Estimated Attendance Rate (%)</label>
+                                            <input type="range" class="form-range" name="attendance_rate" 
+                                                   min="60" max="100" value="85" oninput="updateAttendanceValue(this.value)">
+                                            <div class="d-flex justify-content-between">
+                                                <small>60%</small>
+                                                <small id="attendanceValue">85%</small>
+                                                <small>100%</small>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-6">
+                                            <label class="form-label">Extracurricular Level</label>
+                                            <select class="form-select" name="extracurricular_level">
+                                                <option value="1">1 - Minimal</option>
+                                                <option value="2">2 - Limited</option>
+                                                <option value="3" selected>3 - Moderate</option>
+                                                <option value="4">4 - Active</option>
+                                                <option value="5">5 - Highly Active</option>
+                                            </select>
+                                        </div>
+                                    </div>
+
+                                    <!-- Action Buttons -->
+                                    <div class="d-grid gap-2 d-md-flex justify-content-md-center mt-4">
+                                        <button type="submit" class="btn btn-primary btn-lg px-5" id="predictBtn">
+                                            <i class="bi bi-calculator"></i> Predict Performance
+                                        </button>
+                                        <button type="button" class="btn btn-outline-secondary btn-lg" onclick="clearForm()">
+                                            <i class="bi bi-arrow-clockwise"></i> Reset Form
+                                        </button>
+                                    </div>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Right Column: Results Panel -->
+                    <div class="col-lg-5">
+                        <!-- Prediction Results -->
+                        <div class="card shadow mb-4" id="resultsCard" style="display: none;">
+                            <div class="card-header bg-success text-white">
+                                <h4 class="mb-0"><i class="bi bi-clipboard-data"></i> Prediction Results</h4>
+                            </div>
+                            <div class="card-body">
+                                <div class="text-center mb-4">
+                                    <div class="display-3 fw-bold" id="predictedScore">--</div>
+                                    <div class="h4">
+                                        <span class="badge" id="predictedGrade" style="font-size: 1.2rem;">--</span>
+                                    </div>
+                                    <div class="progress mt-3" style="height: 25px;">
+                                        <div class="progress-bar" id="scoreProgress" role="progressbar" style="width: 0%"></div>
+                                    </div>
+                                    <div class="d-flex justify-content-between mt-2">
+                                        <small>0</small>
+                                        <small>50</small>
+                                        <small>100</small>
+                                    </div>
+                                </div>
+
+                                <div class="alert" id="riskAlert">
+                                    <h6><i class="bi bi-shield-check"></i> Risk Assessment</h6>
+                                    <p id="riskText">Analysis pending...</p>
+                                </div>
+
+                                <div class="mb-4">
+                                    <h6><i class="bi bi-bar-chart"></i> Model Confidence</h6>
+                                    <div class="progress" style="height: 20px;">
+                                        <div class="progress-bar bg-info" id="confidenceBar" role="progressbar" style="width: 0%"></div>
+                                    </div>
+                                    <small class="text-muted" id="confidenceText">Confidence: 0%</small>
+                                </div>
+
+                                <div class="mb-4">
+                                    <h6><i class="bi bi-lightning"></i> Recommended Actions</h6>
+                                    <div id="quickActions">
+                                    </div>
+                                </div>
+
+                               <div class="text-center mt-4">
+                                <button class="btn btn-primary btn-lg px-5" onclick="downloadReport()" id="downloadReportBtn">
+                                    <i class="bi bi-download"></i> Download Full Report
+                                </button>
+                                <p class="text-muted mt-2 small">
+                                    Generates a comprehensive PDF/HTML report with analysis and recommendations
+                                </p>
+                            </div>
+                            </div>
+                        </div>
+
+                        <div class="card shadow mb-4" id="featureCard" style="display: none;">
+                            <div class="card-header bg-info text-white">
+                                <h4 class="mb-0"><i class="bi bi-diagram-3"></i> Feature Analysis</h4>
+                            </div>
+                            <div class="card-body">
+                                <div id="featureRadar"></div>
+                                <div class="mt-3">
+                                    <h6>Key Strengths</h6>
+                                    <div id="strengthsList" class="mb-3"></div>
+                                    
+                                    <h6>Areas for Improvement</h6>
+                                    <div id="weaknessesList"></div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="card shadow">
+                            <div class="card-header bg-dark text-white">
+                                <h4 class="mb-0"><i class="bi bi-cpu"></i> Model Insights</h4>
+                            </div>
+                            <div class="card-body">
+                                <div class="alert alert-light">
+                                    <h6><i class="bi bi-info-circle"></i> How It Works</h6>
+                                    <p class="small">This system uses an ensemble of 5 machine learning models to provide accurate predictions:</p>
+                                    <ul class="small">
+                                        <li><strong>Random Forest</strong>: Ensemble of decision trees</li>
+                                        <li><strong>XGBoost</strong>: Gradient boosting algorithm</li>
+                                        <li><strong>LightGBM</strong>: Light gradient boosting</li>
+                                        <li><strong>Neural Network</strong>: Deep learning model</li>
+                                        <li><strong>Ensemble</strong>: Weighted combination</li>
+                                    </ul>
+                                </div>
+                                <div class="text-center">
+                                    <button class="btn btn-sm btn-outline-dark" onclick="window.location.href='dashboard.html'">
+                                        <i class="bi bi-speedometer2"></i> View Analytics Dashboard
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <footer class="footer mt-5 py-3 bg-light">
+        <div class="container text-center">
+            <span class="text-muted">© 2024 Student Performance Prediction System</span>
+            <div class="mt-2">
+                <small>
+                    <i class="bi bi-github"></i> 
+                    <a href="#" class="text-muted">GitHub Repository</a> | 
+                    <a href="#" class="text-muted">Documentation</a> | 
+                    <a href="#" class="text-muted">About</a>
+                </small>
+            </div>
+        </div>
+    </footer>
+
+    <div class="modal fade" id="modelInfoModal" tabindex="-1">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="modelTitle">Model Information</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                </div>
+                <div class="modal-body" id="modelInfoContent">
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Scripts -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="https://cdn.plot.ly/plotly-latest.min.js"></script>
+    <script src="js/main.js"></script>
+</body>
+</html>
